@@ -8,5 +8,5 @@ import javax.annotation.Nonnull;
 public interface StaticAnalyzerRule<S extends StaticAnalyzerRuleState> {
 
     @Nonnull
-    S analyze(@Nonnull final CompilationUnit compiledFile);
+    S analyze(@Nonnull CompilationUnit compiledFile);
 }

@@ -22,13 +22,13 @@ public class SourceCrawlerImpl implements SourceCrawler {
             Pattern.compile("\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*");
 
     @Override
-    public Stream<File> crawlSources(@Nonnull Path rootPath) throws IOException {
+    public Stream<File> crawlSources(@Nonnull final Path rootPath) throws IOException {
         final List<File> sources = new ArrayList<>();
 
         Files.walkFileTree(rootPath, new SimpleFileVisitor<>() {
 
             @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+            public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) {
                 if (!attrs.isDirectory() && file.toString().endsWith(".java")) {
                     sources.add(file.toFile());
                 }
@@ -36,7 +36,7 @@ public class SourceCrawlerImpl implements SourceCrawler {
             }
 
             @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+            public FileVisitResult preVisitDirectory(final Path dir, final BasicFileAttributes attrs) throws IOException {
                 return isSensibleDirectoryToEnter(dir) ? CONTINUE : SKIP_SUBTREE;
             }
         });
@@ -44,7 +44,7 @@ public class SourceCrawlerImpl implements SourceCrawler {
         return sources.stream();
     }
 
-    private boolean isSensibleDirectoryToEnter(Path directory) throws IOException {
+    private boolean isSensibleDirectoryToEnter(final Path directory) throws IOException {
         final String directoryToEnter = directory.getFileName().toString();
         final boolean directoryIsAValidJavaIdentifier =
                 JAVA_IDENTIFIER.matcher(directoryToEnter).matches();

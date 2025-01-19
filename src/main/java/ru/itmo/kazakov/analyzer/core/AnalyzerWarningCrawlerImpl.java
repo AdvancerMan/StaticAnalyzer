@@ -16,16 +16,16 @@ public class AnalyzerWarningCrawlerImpl implements AnalyzerWarningCrawler {
     private final SourceCrawlerImpl sourceCrawler;
     private final JavaParserAdapter javaParserAdapter;
 
-    public AnalyzerWarningCrawlerImpl(StaticAnalyzerImpl staticAnalyzer,
-                                      SourceCrawlerImpl sourceCrawler,
-                                      JavaParser javaParser) {
+    public AnalyzerWarningCrawlerImpl(final StaticAnalyzerImpl staticAnalyzer,
+                                      final SourceCrawlerImpl sourceCrawler,
+                                      final JavaParser javaParser) {
         this.staticAnalyzer = staticAnalyzer;
         this.sourceCrawler = sourceCrawler;
         this.javaParserAdapter = new JavaParserAdapter(javaParser);
     }
 
     @Override
-    public Stream<SourceAwareAnalyzerWarning> crawl(@Nonnull Path rootPath) throws IOException {
+    public Stream<SourceAwareAnalyzerWarning> crawl(@Nonnull final Path rootPath) throws IOException {
         return sourceCrawler
                 .crawlSources(rootPath)
                 .flatMap(file -> {
@@ -38,7 +38,7 @@ public class AnalyzerWarningCrawlerImpl implements AnalyzerWarningCrawler {
                         return Stream.empty();
                     }
 
-                    Stream<AnalyzerWarning> warnings = staticAnalyzer.analyze(compiledFile);
+                    final Stream<AnalyzerWarning> warnings = staticAnalyzer.analyze(compiledFile);
                     return warnings.map(warning -> new SourceAwareAnalyzerWarning(warning, file.toPath()));
                 });
     }

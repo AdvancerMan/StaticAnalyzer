@@ -4,6 +4,7 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParserConfiguration;
 import ru.itmo.kazakov.analyzer.core.*;
 import ru.itmo.kazakov.analyzer.rule.StaticAnalyzerRule;
+import ru.itmo.kazakov.analyzer.rule.VariableCouldBeFinalRule;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,33 +14,34 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(final String[] args) throws IOException {
         if (args.length != 1) {
             System.err.println("Expected 1 argument: root sources path");
             return;
         }
-        Path rootPath = Path.of(args[0]);
+        final Path rootPath = Path.of(args[0]);
 
-        List<StaticAnalyzerRule<? extends StaticAnalyzerRuleState>> analyzerRules = List.of(
+        final List<StaticAnalyzerRule<? extends StaticAnalyzerRuleState>> analyzerRules = List.of(
+                new VariableCouldBeFinalRule()
         );
 
-        StaticAnalyzerImpl staticAnalyzer = new StaticAnalyzerImpl(analyzerRules);
-        SourceCrawlerImpl sourceCrawler = new SourceCrawlerImpl();
-        JavaParser javaParser = new JavaParser();
+        final StaticAnalyzerImpl staticAnalyzer = new StaticAnalyzerImpl(analyzerRules);
+        final SourceCrawlerImpl sourceCrawler = new SourceCrawlerImpl();
+        final JavaParser javaParser = new JavaParser();
         javaParser
                 .getParserConfiguration()
                 .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_21);
 
-        AnalyzerWarningCrawlerImpl analyzerWarningCrawler = new AnalyzerWarningCrawlerImpl(
+        final AnalyzerWarningCrawlerImpl analyzerWarningCrawler = new AnalyzerWarningCrawlerImpl(
                 staticAnalyzer,
                 sourceCrawler,
                 javaParser
         );
 
-        Stream<SourceAwareAnalyzerWarning> warningsStream = analyzerWarningCrawler.crawl(rootPath);
+        final Stream<SourceAwareAnalyzerWarning> warningsStream = analyzerWarningCrawler.crawl(rootPath);
 
-        AnalyzerWarningsPrettyPrinterImpl analyzerWarningsPrettyPrinter = new AnalyzerWarningsPrettyPrinterImpl();
-        LongSummaryStatistics totalWarnings = warningsStream.collect(Collectors.summarizingLong(warning -> {
+        final AnalyzerWarningsPrettyPrinterImpl analyzerWarningsPrettyPrinter = new AnalyzerWarningsPrettyPrinterImpl();
+        final LongSummaryStatistics totalWarnings = warningsStream.collect(Collectors.summarizingLong(warning -> {
             analyzerWarningsPrettyPrinter.prettyPrint(warning);
             return 1;
         }));

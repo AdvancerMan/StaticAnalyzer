@@ -20,7 +20,7 @@ public class StaticAnalyzerImpl implements StaticAnalyzer {
 
     @Nonnull
     @Override
-    public Stream<AnalyzerWarning> analyze(@Nonnull CompilationUnit compiledFile) {
+    public Stream<AnalyzerWarning> analyze(@Nonnull final CompilationUnit compiledFile) {
         return staticAnalyzerRules
                 .stream()
                 .flatMap(rule -> rule.analyze(compiledFile).getWarnings().stream());

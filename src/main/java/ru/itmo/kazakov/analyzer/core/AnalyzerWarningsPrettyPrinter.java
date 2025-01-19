@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 public interface AnalyzerWarningsPrettyPrinter {
 
-    void prettyPrint(@Nonnull final SourceAwareAnalyzerWarning analyzerWarning);
+    void prettyPrint(@Nonnull SourceAwareAnalyzerWarning analyzerWarning);
 
-    void prettyPrint(@Nonnull final AnalyzerWarningStatistics analyzerWarningStatistics);
+    void prettyPrint(@Nonnull AnalyzerWarningStatistics analyzerWarningStatistics);
 }

@@ -8,5 +8,5 @@ import java.util.stream.Stream;
 
 public interface SourceCrawler {
 
-    Stream<File> crawlSources(@Nonnull final Path rootPath) throws IOException;
+    Stream<File> crawlSources(@Nonnull Path rootPath) throws IOException;
 }

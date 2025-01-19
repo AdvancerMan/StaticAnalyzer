@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public record AnalyzerWarning(
         @Nonnull String message,
-        @Nonnull Position warningBeginPosition,
-        @Nonnull Optional<Position> warningEndPosition
+        @Nonnull Optional<Position> beginPosition,
+        @Nonnull Optional<Position> endPosition
 ) {
     // no methods
 }

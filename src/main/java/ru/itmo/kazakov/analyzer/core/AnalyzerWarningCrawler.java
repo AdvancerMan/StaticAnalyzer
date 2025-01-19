@@ -7,5 +7,5 @@ import java.util.stream.Stream;
 
 public interface AnalyzerWarningCrawler {
 
-    Stream<SourceAwareAnalyzerWarning> crawl(@Nonnull final Path rootPath) throws IOException;
+    Stream<SourceAwareAnalyzerWarning> crawl(@Nonnull Path rootPath) throws IOException;
 }
