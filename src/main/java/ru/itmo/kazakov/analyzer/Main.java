@@ -41,7 +41,7 @@ public class Main {
         final Stream<SourceAwareAnalyzerWarning> warningsStream = analyzerWarningCrawler.crawl(rootPath);
 
         final AnalyzerWarningsPrettyPrinterImpl analyzerWarningsPrettyPrinter = new AnalyzerWarningsPrettyPrinterImpl();
-        LongSummaryStatistics totalWarnings = warningsStream.collect(Collectors.summarizingLong(warning -> {
+        final LongSummaryStatistics totalWarnings = warningsStream.collect(Collectors.summarizingLong(warning -> {
             analyzerWarningsPrettyPrinter.prettyPrint(warning);
             return 1;
         }));
