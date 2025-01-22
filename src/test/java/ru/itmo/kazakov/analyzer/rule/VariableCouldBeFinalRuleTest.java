@@ -9,11 +9,8 @@ import ru.itmo.kazakov.analyzer.core.StaticAnalyzerRuleState;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class VariableCouldBeFinalRuleTest {
 
     private static void assertWarningPositions(
-            @Nonnull Set<Position> expectedPositions,
-            @Nonnull StaticAnalyzerRuleState actualRuleState
+            @Nonnull final Set<Position> expectedPositions,
+            @Nonnull final StaticAnalyzerRuleState actualRuleState
     ) {
-        Set<Position> positions = actualRuleState
+        final Set<Position> positions = actualRuleState
                 .getWarnings()
                 .stream()
                 .map(AnalyzerWarning::beginPosition)
@@ -40,7 +37,7 @@ class VariableCouldBeFinalRuleTest {
 
     @Test
     public void simpleNoWarningsCorrectFinalDeclaration() {
-        CompilationUnit compiledSource = StaticJavaParser.parse(
+        final CompilationUnit compiledSource = StaticJavaParser.parse(
                 """
                         package ru.itmo.kazakov.analyzer;
                         public class Main {
@@ -51,7 +48,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Collections.emptySet(),
@@ -72,7 +69,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(4, 9)),
@@ -97,7 +94,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(4, 9)),
@@ -118,7 +115,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(4, 9)),
@@ -140,7 +137,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(4, 9)),
@@ -163,7 +160,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Collections.emptySet(),
@@ -185,7 +182,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(4, 9)),
@@ -206,7 +203,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(3, 29)),
@@ -227,7 +224,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(3, 29),
@@ -250,7 +247,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Collections.emptySet(),
@@ -274,7 +271,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(5, 9)),
@@ -298,7 +295,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Collections.emptySet(),
@@ -321,7 +318,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(4, 14)),
@@ -348,7 +345,7 @@ class VariableCouldBeFinalRuleTest {
         );
 
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(4, 9)),
@@ -373,7 +370,7 @@ class VariableCouldBeFinalRuleTest {
         );
 
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Collections.emptySet(),
@@ -397,7 +394,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Collections.emptySet(),
@@ -427,10 +424,169 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(4, 14)),
+                ruleState
+        );
+    }
+
+    @Test
+    public void allIfClausesOnceShouldBeFinal() {
+        final CompilationUnit compiledSource = StaticJavaParser.parse(
+                """
+                        package ru.itmo.kazakov.analyzer;
+                        public class Main {
+                            public static void main(final String[] args) throws Exception {
+                                int x;
+                                if (1 == 1) {
+                                    x = 1;
+                                } else if (2 == 2) {
+                                    x = 2;
+                                } else {
+                                    x = 3;
+                                }
+                            }
+                        }
+                        """
+        );
+
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+
+        assertWarningPositions(
+                Set.of(new Position(4, 9)),
+                ruleState
+        );
+    }
+
+    @Test
+    public void allExceptOneIfClausesOnceShouldBeFinal() {
+        final CompilationUnit compiledSource = StaticJavaParser.parse(
+                """
+                        package ru.itmo.kazakov.analyzer;
+                        public class Main {
+                            public static void main(final String[] args) throws Exception {
+                                int x;
+                                if (1 == 1) {
+                                    x = 1;
+                                } else if (2 == 2) {
+                                    // no operations
+                                } else {
+                                    x = 3;
+                                }
+                            }
+                        }
+                        """
+        );
+
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+
+        assertWarningPositions(
+                Set.of(new Position(4, 9)),
+                ruleState
+        );
+    }
+
+    @Test
+    public void oneIfClauseOnceShouldBeFinal() {
+        final CompilationUnit compiledSource = StaticJavaParser.parse(
+                """
+                        package ru.itmo.kazakov.analyzer;
+                        public class Main {
+                            public static void main(final String[] args) throws Exception {
+                                int x;
+                                if (1 == 1) {
+                                    x = 1;
+                                }
+                            }
+                        }
+                        """
+        );
+
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+
+        assertWarningPositions(
+                Set.of(new Position(4, 9)),
+                ruleState
+        );
+    }
+
+    @Test
+    public void oneIfClauseManyShouldNotBeFinal() {
+        final CompilationUnit compiledSource = StaticJavaParser.parse(
+                """
+                        package ru.itmo.kazakov.analyzer;
+                        public class Main {
+                            public static void main(final String[] args) throws Exception {
+                                int x;
+                                if (1 == 1) {
+                                    x = 1;
+                                } else if (2 == 2) {
+                                    x = 2;
+                                    x = 3;
+                                } else {
+                                    x = 4;
+                                }
+                            }
+                        }
+                        """
+        );
+
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+
+        assertWarningPositions(
+                Collections.emptySet(),
+                ruleState
+        );
+    }
+
+    @Test
+    public void inIfAndAfterShouldNotBeFinal() {
+        final CompilationUnit compiledSource = StaticJavaParser.parse(
+                """
+                        package ru.itmo.kazakov.analyzer;
+                        public class Main {
+                            public static void main(final String[] args) throws Exception {
+                                int x;
+                                if (1 == 1) {
+                                    x = 1;
+                                }
+                                x = 2;
+                            }
+                        }
+                        """
+        );
+
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+
+        assertWarningPositions(
+                Collections.emptySet(),
+                ruleState
+        );
+    }
+
+    @Test
+    public void inIfAndBeforeShouldNotBeFinal() {
+        final CompilationUnit compiledSource = StaticJavaParser.parse(
+                """
+                        package ru.itmo.kazakov.analyzer;
+                        public class Main {
+                            public static void main(final String[] args) throws Exception {
+                                int x;
+                                x = 2;
+                                if (1 == 1) {
+                                    x = 1;
+                                }
+                            }
+                        }
+                        """
+        );
+
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+
+        assertWarningPositions(
+                Collections.emptySet(),
                 ruleState
         );
     }
@@ -458,7 +614,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(10, 13),
@@ -486,7 +642,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(4, 9),
@@ -508,7 +664,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(3, 17),
@@ -535,7 +691,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(4, 9),
@@ -565,7 +721,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(8, 17)),
@@ -593,7 +749,7 @@ class VariableCouldBeFinalRuleTest {
                         """
         );
 
-        VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
+        final VariableCouldBeFinalRule.State ruleState = new VariableCouldBeFinalRule().analyze(compiledSource);
 
         assertWarningPositions(
                 Set.of(new Position(5, 13),

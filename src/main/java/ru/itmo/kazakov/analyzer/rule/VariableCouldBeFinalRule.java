@@ -192,6 +192,25 @@ public class VariableCouldBeFinalRule extends StaticAnalyzerVisitorRule<Variable
         });
     }
 
+    @Override
+    public void visit(final IfStmt n, final State state) {
+        n.getCondition().accept(this, state);
+
+        final Map<String, Long> parentVariableCounts = Map.copyOf(state.assignmentsForVariable);
+        state.assignmentsForVariable.replaceAll((__, count) -> 0L);
+
+        n.getThenStmt().accept(this, state);
+
+        final Map<String, Long> thenVariableCounts = Map.copyOf(state.assignmentsForVariable);
+        state.assignmentsForVariable.replaceAll((__, count) -> 0L);
+
+        n.getElseStmt().ifPresent(l -> l.accept(this, state));
+        n.getComment().ifPresent(l -> l.accept(this, state));
+
+        thenVariableCounts.forEach((name, count) -> state.assignmentsForVariable.merge(name, count, Long::max));
+        parentVariableCounts.forEach((name, count) -> state.assignmentsForVariable.merge(name, count, Long::sum));
+    }
+
     private record VariableDeclarationDescription(
             List<String> names,
             Optional<Position> beginPosition,
